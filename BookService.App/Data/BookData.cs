@@ -32,7 +32,7 @@ namespace BookService.App.Data
             foreach(var book in BookList)
             {
                 if (book.Id == newBook.Id)
-                    return new Response(null, "Book with samme Id already exists.");
+                    return new Response(null, "Book with same Id already exists.");
             }
             BookList.Add(newBook);
             ConvertToJson(BookList);

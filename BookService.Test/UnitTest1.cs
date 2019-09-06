@@ -60,16 +60,16 @@ namespace BookService.Test
         [Fact]
         public void Check_For_Adding_New_Book_With_Existing_Id()
         {
-            Book book = new Book { Id = 2, Name = "Sherlock Holmes", Category = "Mystery", Author = "Arthur Conan Doyle", Price = 400 };
+            Book book = new Book { Id = 3, Name = "The Fault in our Stars", Category = "Romance", Author = "John Green", Price = 350 };
             var actual = booksService.AddNewBook(book);
-            var expected = new Response(null, "Book with samme Id already exists.");
+            var expected = new Response(null, "Book with same Id already exists.");
             expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
         public void Check_For_Adding_New_Book_With_Invalid_Details()
         {
-            Book book = new Book { Id = 3, Name = "Sherlock Holmes324", Category = "Mys324tery", Author = "Arthur Conan Doyle", Price = -400 };
+            Book book = new Book { Id = 5, Name = "Sherlock Holmes324", Category = "Mys324tery", Author = "Arthur Conan Doyle", Price = -400 };
             var expected = new Response(null, "Invalid Details, please ensure that Name, Category and Author contain only alphabets and Id and Price are positive numbers.");
             var actual = booksService.AddNewBook(book);
             expected.Should().BeEquivalentTo(actual);
@@ -78,8 +78,8 @@ namespace BookService.Test
         [Fact]
         public void Check_For_Updating_Book_Details()
         {
-            Book book = new Book { Id = 2, Name = "Sherlock Holmes", Category = "Mystery Adventure", Author = "Arthur Conan Doyle", Price = 500 };
-            var actual = booksService.UpdateData(2, book);
+            Book book = new Book { Id = 4, Name = "Outliers", Category = "Business Non-Fiction", Author = "Martin Fowler", Price = 500 };
+            var actual = booksService.UpdateData(4, book);
             var expected = new Response(null, "Book Details Updated Successfully.");
             expected.Should().BeEquivalentTo(actual);
         }
