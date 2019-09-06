@@ -16,37 +16,42 @@ namespace BookService.App.Controllers
         BooksService booksService = new BooksService(); 
         // GET: api/Book
         [HttpGet]
-        public Response Get()
+        public ActionResult<Response> Get()
         {
-            return booksService.GetAllBooks();
+            Response response = booksService.GetAllBooks();
+            return StatusCode(response.StatusCode, response);
         }
 
         // GET: api/Book/5
         [HttpGet("{id}", Name = "Get")]
-        public Response Get(int id)
+        public ActionResult<Response> Get(int id)
         {
-            return booksService.GetBookById(id);
+            Response response = booksService.GetBookById(id);
+            return StatusCode(response.StatusCode, response);
         }
 
         // POST: api/Book
         [HttpPost]
-        public Response Post([FromBody] Book value)
+        public ActionResult<Response> Post([FromBody] Book value)
         {
-            return booksService.AddNewBook(value);
+            Response response = booksService.AddNewBook(value);
+            return StatusCode(response.StatusCode, response);
         }
 
         // PUT: api/Book/5
         [HttpPut("{id}")]
-        public Response Put(int id, [FromBody] Book value)
+        public ActionResult<Response> Put(int id, [FromBody] Book value)
         {
-            return booksService.UpdateData(id, value);
+            Response response = booksService.UpdateData(id, value);
+            return StatusCode(response.StatusCode, response);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public Response Delete(int id)
+        public ActionResult<Response> Delete(int id)
         {
-            return booksService.DeleteBook(id);
+            Response response = booksService.DeleteBook(id);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

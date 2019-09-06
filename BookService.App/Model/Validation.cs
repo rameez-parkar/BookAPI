@@ -14,10 +14,10 @@ namespace BookService.App.Model
 
         public bool IsAllAlphabet(string value)
         {
-            if (value.Any(char.IsDigit))
-                return false;
-            else
+            if (value.All(x => char.IsLetter(x) || char.IsWhiteSpace(x)))
                 return true;
+            else
+                return false;
         }
     }
 }
