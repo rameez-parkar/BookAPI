@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
+using FluentAssertions;
 
 namespace BookService.Test
 {
@@ -18,7 +19,7 @@ namespace BookService.Test
             LoadJsonFile();
             var expected = new Response(BookList, null);
             var actual = booksService.GetAllBooks();
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -27,7 +28,7 @@ namespace BookService.Test
             Book book = new Book { Id = 1, Name = "Harry Potter", Category = "Fiction", Author = "JK Rowling", Price = 500 };
             var expected = new Response(new List<Book> { book }, null);
             var actual = booksService.GetBookById(1);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -35,7 +36,7 @@ namespace BookService.Test
         {
             var expected = new Response(null, "Invalid Id, Id must be a positiive number.");
             var actual = booksService.GetBookById(-1);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -43,26 +44,26 @@ namespace BookService.Test
         {
             var expected = new Response(null, "Invalid Id, The Book Id you entered does not exist.");
             var actual = booksService.GetBookById(8);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
         public void Check_For_Adding_New_Book()
         {
-            LoadJsonFile();
             Book book = new Book { Id = 2, Name = "Sherlock Holmes", Category = "Mystery", Author = "Arthur Conan Doyle", Price = 400 };
-            var expected = new Response(BookList, "New Book Added successfully");
             var actual = booksService.AddNewBook(book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            LoadJsonFile();
+            var expected = new Response(BookList, "New Book Added successfully");
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
         public void Check_For_Adding_New_Book_With_Existing_Id()
         {
             Book book = new Book { Id = 2, Name = "Sherlock Holmes", Category = "Mystery", Author = "Arthur Conan Doyle", Price = 400 };
-            var expected = new Response(null, "Book with samme Id already exists.");
             var actual = booksService.AddNewBook(book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            var expected = new Response(null, "Book with samme Id already exists.");
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -71,16 +72,16 @@ namespace BookService.Test
             Book book = new Book { Id = 3, Name = "Sherlock Holmes324", Category = "Mys324tery", Author = "Arthur Conan Doyle", Price = -400 };
             var expected = new Response(null, "Invalid Details, please ensure that Name, Category and Author contain only alphabets and Id and Price are positive numbers.");
             var actual = booksService.AddNewBook(book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
         public void Check_For_Updating_Book_Details()
         {
             Book book = new Book { Id = 2, Name = "Sherlock Holmes", Category = "Mystery Adventure", Author = "Arthur Conan Doyle", Price = 500 };
-            var expected = new Response(null, "Book Details Updated Successfully.");
             var actual = booksService.UpdateData(2, book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            var expected = new Response(null, "Book Details Updated Successfully.");
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -89,7 +90,7 @@ namespace BookService.Test
             Book book = new Book { Id = 2, Name = "Sherlock Holmes", Category = "Mystery and Adventure", Author = "Mr. Arthur Conan Doyle", Price = 500 };
             var expected = new Response(null, "Invalid Id, Book Id should be a positive number.");
             var actual = booksService.UpdateData(-2, book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -98,7 +99,7 @@ namespace BookService.Test
             Book book = new Book { Id = 5, Name = "Sherlock Holmes", Category = "Mystery and Adventure", Author = "Mr. Arthur Conan Doyle", Price = 500 };
             var expected = new Response(null, "Invalid Id, The Book Id you entered does not exist.");
             var actual = booksService.UpdateData(5, book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -107,7 +108,7 @@ namespace BookService.Test
             Book book = new Book { Id = 2, Name = "Sherlock Holmes435", Category = "Myster2342342y and Adventure", Author = "Mr. Arthur Conan Doyle", Price = -500 };
             var expected = new Response(null, "Invalid Details, please ensure that Name, Category and Author contain only alphabets and Id and Price are positive numbers.");
             var actual = booksService.UpdateData(2, book);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -115,7 +116,7 @@ namespace BookService.Test
         {
             var expected = new Response(null, "Invalid Id, Id must be a positive number.");
             var actual = booksService.DeleteBook(-2);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -123,7 +124,7 @@ namespace BookService.Test
         {
             var expected = new Response(null, "Invalid Id, The Book Id you entered does not exist.");
             var actual = booksService.DeleteBook(5);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         [Fact]
@@ -131,7 +132,7 @@ namespace BookService.Test
         {
             var expected = new Response(null, "Book Deleted successfully.");
             var actual = booksService.DeleteBook(2);
-            Assert.Equal(expected.ToString(), actual.ToString());
+            expected.Should().BeEquivalentTo(actual);
         }
 
         public void LoadJsonFile()
