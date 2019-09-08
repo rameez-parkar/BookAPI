@@ -32,11 +32,11 @@ namespace BookService.App.Data
             foreach(var book in BookList)
             {
                 if (book.Id == newBook.Id)
-                    return new Response(null, "Book with same Id already exists.", 400);
+                    return new Response(null, new List<string> { "Book with same Id already exists." }, 400);
             }
             BookList.Add(newBook);
             ConvertToJson(BookList);
-            return new Response(BookList, "New Book Added successfully", 200);
+            return new Response(BookList, new List<string> { "New Book Added successfully" }, 200);
         }
 
         public Response DeleteBook(int bookId)
@@ -47,10 +47,10 @@ namespace BookService.App.Data
                 {
                     BookList.Remove(book);
                     ConvertToJson(BookList);
-                    return new Response(null, "Book Deleted successfully.", 200);
+                    return new Response(null, new List<string> { "Book Deleted successfully." }, 200);
                 }
             }
-            return new Response(null, "Invalid Id, The Book Id you entered does not exist.", 400);
+            return new Response(null, new List<string> { "Invalid Id, The Book Id you entered does not exist." }, 400);
         }
 
         public Response GetAllBooks()
@@ -65,7 +65,7 @@ namespace BookService.App.Data
                 if (book.Id == bookId)
                     return new Response(new List<Book> { book }, null, 200);
             }
-            return new Response(null, "Invalid Id, The Book Id you entered does not exist.", 400);
+            return new Response(null, new List<string> { "Invalid Id, The Book Id you entered does not exist." }, 400);
         }
 
         public Response UpdateData(int bookId, Book updatedData)
@@ -79,10 +79,10 @@ namespace BookService.App.Data
                     book.Author = updatedData.Author;
                     book.Category = updatedData.Category;
                     ConvertToJson(BookList);
-                    return new Response(null, "Book Details Updated Successfully.", 200);
+                    return new Response(null, new List<string> { "Book Details Updated Successfully." }, 200);
                 }
             }
-            return new Response(null, "Invalid Id, The Book Id you entered does not exist.", 400);
+            return new Response(null, new List<string> { "Invalid Id, The Book Id you entered does not exist." }, 400);
         }
     }
 }

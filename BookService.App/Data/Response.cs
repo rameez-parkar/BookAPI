@@ -5,10 +5,10 @@ namespace BookService.App.Data
     public class Response
     {
         public List<Book> BookList;
-        public string Message;
+        public List<string> Message;
         public int StatusCode; 
 
-        public Response(List<Book> books, string message, int statusCode)
+        public Response(List<Book> books, List<string> message, int statusCode)
         {
             this.BookList = books;
             this.Message = message;

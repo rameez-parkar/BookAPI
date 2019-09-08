@@ -11,10 +11,10 @@ namespace BookService.App.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookController : ControllerBase
+    public class BooksController : ControllerBase
     {
         BooksService booksService = new BooksService(); 
-        // GET: api/Book
+        // GET: api/Books
         [HttpGet]
         public ActionResult<Response> Get()
         {
@@ -22,7 +22,7 @@ namespace BookService.App.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        // GET: api/Book/5
+        // GET: api/Books/5
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<Response> Get(int id)
         {
@@ -30,7 +30,7 @@ namespace BookService.App.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        // POST: api/Book
+        // POST: api/Books
         [HttpPost]
         public ActionResult<Response> Post([FromBody] Book value)
         {
@@ -38,7 +38,7 @@ namespace BookService.App.Controllers
             return StatusCode(response.StatusCode, response);
         }
 
-        // PUT: api/Book/5
+        // PUT: api/Books/5
         [HttpPut("{id}")]
         public ActionResult<Response> Put(int id, [FromBody] Book value)
         {
