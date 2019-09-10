@@ -1,7 +1,6 @@
 ﻿using BookService.App.Data;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace BookService.App.Model
 {

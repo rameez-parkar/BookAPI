@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BookService.App.Data;
+using BookService.App.Middleware.WebApplication1;
 using BookService.App.Model;
-using FluentValidation;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookService.App.Controllers
@@ -34,6 +31,7 @@ namespace BookService.App.Controllers
 
         // POST: api/Books
         [HttpPost]
+        [ValidateModelStateFilter]
         public ActionResult<Response> Post([FromBody] Book value)
         {
             List<string> response_message = new List<string>();
@@ -53,6 +51,7 @@ namespace BookService.App.Controllers
 
         // PUT: api/Books/5
         [HttpPut("{id}")]
+        [ValidateModelStateFilter]
         public ActionResult<Response> Put(int id, [FromBody] Book value)
         {
             List<string> response_message = new List<string>();
