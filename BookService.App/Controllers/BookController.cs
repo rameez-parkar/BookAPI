@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BookService.App.Data;
 using BookService.App.Model;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,7 +14,8 @@ namespace BookService.App.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        BooksService booksService = new BooksService(); 
+        BooksService booksService = new BooksService();
+
         // GET: api/Books
         [HttpGet]
         public ActionResult<Response> Get()
@@ -34,16 +36,38 @@ namespace BookService.App.Controllers
         [HttpPost]
         public ActionResult<Response> Post([FromBody] Book value)
         {
-            Response response = booksService.AddNewBook(value);
-            return StatusCode(response.StatusCode, response);
+            List<string> response_message = new List<string>();
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values)
+                    response_message.Add(error.ToString());
+                return StatusCode(400, response_message);
+            }
+            else
+            {
+                Response response = booksService.AddNewBook(value);
+                return StatusCode(response.StatusCode, response);
+            }
         }
 
         // PUT: api/Books/5
         [HttpPut("{id}")]
         public ActionResult<Response> Put(int id, [FromBody] Book value)
         {
-            Response response = booksService.UpdateData(id, value);
-            return StatusCode(response.StatusCode, response);
+            List<string> response_message = new List<string>();
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values)
+                    response_message.Add(error.ToString());
+                return StatusCode(400, response_message);
+            }
+            else
+            {
+                Response response = booksService.UpdateData(id, value);
+                return StatusCode(response.StatusCode, response);
+            }
         }
 
         // DELETE: api/ApiWithActions/5
