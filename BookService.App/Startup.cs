@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using FluentValidation.AspNetCore;
+using BookService.App.Model;
 
 namespace BookService.App
 {
@@ -37,6 +38,9 @@ namespace BookService.App
             });
             services.AddMvc().AddFluentValidation
                 (fv => fv.RegisterValidatorsFromAssemblyContaining<BookValidation>());
+
+            services.AddSingleton<IBooksService, BooksService>();
+            services.AddSingleton<IBookData, BookData>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

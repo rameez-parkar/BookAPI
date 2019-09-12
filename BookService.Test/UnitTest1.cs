@@ -10,7 +10,8 @@ namespace BookService.Test
 {
     public class BookServiceTest
     {
-        BooksService booksService = new BooksService();
+        static IBookData bookData = new BookData();
+        IBooksService booksService = new BooksService(bookData);
         List<Book> BookList = new List<Book>();
 
         [Fact]

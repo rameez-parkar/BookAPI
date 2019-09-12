@@ -6,9 +6,14 @@ namespace BookService.App.Model
 {
     public class BooksService : IBooksService
     {
-        BookData _bookData = new BookData();
+        private IBookData _bookData;
         Validation _validation = new Validation();
         List<string> _message = new List<string>();
+
+        public BooksService(IBookData bookData)
+        {
+            this._bookData = bookData;
+        }
 
         public Response AddNewBook(Book newBook)
         {

@@ -11,13 +11,18 @@ namespace BookService.App.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        BooksService booksService = new BooksService();
+        private IBooksService _booksService; 
+
+        public BooksController(IBooksService booksService)
+        {
+            this._booksService = booksService;
+        }
 
         // GET: api/Books
         [HttpGet]
         public ActionResult<Response> Get()
         {
-            Response response = booksService.GetAllBooks();
+            Response response = _booksService.GetAllBooks();
             return StatusCode(response.StatusCode, response);
         }
 
@@ -25,7 +30,7 @@ namespace BookService.App.Controllers
         [HttpGet("{id}", Name = "Get")]
         public ActionResult<Response> Get(int id)
         {
-            Response response = booksService.GetBookById(id);
+            Response response = _booksService.GetBookById(id);
             return StatusCode(response.StatusCode, response);
         }
 
@@ -44,7 +49,7 @@ namespace BookService.App.Controllers
             }
             else
             {
-                Response response = booksService.AddNewBook(value);
+                Response response = _booksService.AddNewBook(value);
                 return StatusCode(response.StatusCode, response);
             }
         }
@@ -64,7 +69,7 @@ namespace BookService.App.Controllers
             }
             else
             {
-                Response response = booksService.UpdateData(id, value);
+                Response response = _booksService.UpdateData(id, value);
                 return StatusCode(response.StatusCode, response);
             }
         }
@@ -73,7 +78,7 @@ namespace BookService.App.Controllers
         [HttpDelete("{id}")]
         public ActionResult<Response> Delete(int id)
         {
-            Response response = booksService.DeleteBook(id);
+            Response response = _booksService.DeleteBook(id);
             return StatusCode(response.StatusCode, response);
         }
     }
